@@ -1,0 +1,46 @@
+// Testbench for Buffer Register (tb_buf_reg.v)
+module tb_buf_reg;
+
+    reg clk;
+    reg reset;
+    reg enable;
+    reg data_in;
+    wire data_out;
+
+    // Instantiate the Buffer Register
+    buf_reg uut (
+        .clk(clk),
+        .reset(reset),
+        .enable(enable),
+        .data_in(data_in),
+        .data_out(data_out)
+    );
+
+    // Clock Generation
+    always begin
+        #5 clk = ~clk;
+    end
+
+    // Testbench Stimulus
+    initial begin
+        clk = 0;
+        reset = 1;
+        enable = 0;
+        data_in = 4'b1010;
+
+        #10 reset = 0;  // Deassert reset
+
+        // Test Case 1: Disable and change data_in
+        enable = 0;
+        data_in = 4'b0011;
+        #20 enable = 1;
+        #10 enable = 0;
+
+        // Test Case 2: Enable without changing data_in
+        enable = 1;
+        #20 enable = 0;
+
+        $finish;  // End simulation
+    end
+
+endmodule
