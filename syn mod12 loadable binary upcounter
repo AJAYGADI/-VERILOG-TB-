@@ -1,0 +1,46 @@
+module tb();
+reg reset,load;
+reg [3:0]data;
+wire [3:0]count;
+reg clk=0;
+always #10 clk=~clk;
+mod12 DUT(data,load,clk,reset,count);
+task initialize();
+ begin
+ {reset,load,data}=010000;
+ end
+endtask
+task rst_dut();
+ begin
+ @(negedge clk);
+ reset =1'b1;
+ @(negedge clk);
+ reset =1'b0;
+ end
+endtask
+task load_in(input i);
+ begin
+ @(negedge clk)
+ load=i;
+ end
+endtask
+task inputs(input [3:0]j);
+ begin
+ @(negedge clk)
+ data=j;
+ end
+endtask
+initial
+begin
+ initialize;
+ rst_dut;
+ load_in(1'b0);
+ inputs(4'b0000);
+ #50;
+end
+initial
+#500 $finish;
+initial 
+$monitor("clk=%b,reset=%b,load=%b,data=%b,count=%b",clk,reset,load,data,cou
+nt);
+endmodule
