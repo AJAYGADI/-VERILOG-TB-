@@ -1,0 +1,17 @@
+module tb();
+reg en;
+reg [0:7]i;
+wire [0:2]y;
+pr_en DUT (en,i,y);
+initial
+begin
+#50 en=1;i=8'b00000011;
+#50 en=1;i=8'b00000001;
+#50 en=1;i=8'b00001000;
+#50 en=1;i=8'b10000000;
+end
+initial
+ begin
+ $display("en=%b,i=%b,y=%b",en,i,y);
+ end
+endmodule
