@@ -1,0 +1,56 @@
+module tb_carry_lookahead_adder;
+
+    // Inputs
+    reg [3:0] A;
+    reg [3:0] B;
+    reg Cin;
+
+    // Outputs
+    wire [3:0] Sum;
+    wire Cout;
+
+    // Instantiate the Carry Look-Ahead Adder
+    carry_lookahead_adder uut (
+        .A(A),
+        .B(B),
+        .Cin(Cin),
+        .Sum(Sum),
+        .Cout(Cout)
+    );
+
+    // Clock generation
+    reg clk = 0;
+    always begin
+        #5 clk = ~clk;
+    end
+
+    // Test vector generation
+    initial begin
+        $dumpfile("cla_adder.vcd");
+        $dumpvars(0, tb_carry_lookahead_adder);
+
+        // Test case 1: A=7, B=5, Cin=0
+        A = 4'b0111;
+        B = 4'b0101;
+        Cin = 0;
+        #10;
+        $display("Test Case 1: A=7, B=5, Cin=0, Sum=%b, Cout=%b", Sum, Cout);
+
+        // Test case 2: A=15, B=1, Cin=1
+        A = 4'b1111;
+        B = 4'b0001;
+        Cin = 1;
+        #10;
+        $display("Test Case 2: A=15, B=1, Cin=1, Sum=%b, Cout=%b", Sum, Cout);
+
+        // Add more test cases here
+
+        $finish;
+    end
+
+    // Clock driver
+    always begin
+        #5 clk = ~clk;
+    end
+
+endmodule
