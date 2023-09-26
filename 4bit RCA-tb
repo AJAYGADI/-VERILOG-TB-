@@ -1,0 +1,17 @@
+module tb();
+reg [3:0]a,b;
+reg cin;
+wire [3:0]s;
+wire cout;
+rca DUT(a,b,cin,s,cout);
+initial
+ begin
+ #30 a=4'b0000;b=4'b0000;cin=4'b000;
+ #30 a=4'b0110;b=4'b1100;cin=0;
+ #30 a=4'b1110;b=4'b1000;cin=0;
+ #30 a=4'b0111;b=4'b1110;cin=0;
+ #30 a=4'b0010;b=4'b1001;cin=0;
+ end
+initial
+ $display("input a=%b,b=%b,cin=%b, output s=%b,cout=%b",a,b,cin,s,cout);
+endmodule
