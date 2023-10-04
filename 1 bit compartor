@@ -1,0 +1,15 @@
+initial begin
+// Initialize Inputs 
+a = 0; b = 0;
+// Wait 100 ns for global reset to finish
+#100;
+// Add stimulus here 
+#100; a = 0; b = 1;
+#100; a = 1; b = 0;
+#100; a = 1; b = 1; 
+end
+initial begin 
+#100 
+$monitor(“a = %b, b = %b, lower = %b, greater = %b, equal = %b”, a, b, lower, greater, equal); 
+end 
+endmodule
